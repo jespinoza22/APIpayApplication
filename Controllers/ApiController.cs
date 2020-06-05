@@ -9,6 +9,7 @@ using APIpayApplication.DbContext;
 using Microsoft.EntityFrameworkCore;
 using APIpayApplication.Repository;
 using APIpayApplication.Models;
+using APIpayApplication.Utils;
 
 namespace APIpayApplication.Controllers
 {
@@ -26,6 +27,8 @@ namespace APIpayApplication.Controllers
         [HttpGet("public")]
         public IActionResult Public()
         {
+            string aleatory = utils.IdGenerated();
+
             var incomes = _incomeRepository.getAll();
             return new OkObjectResult(incomes);
             //return Ok(new
