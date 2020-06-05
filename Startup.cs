@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using MySql.Data.EntityFrameworkCore.Extensions;
 using Microsoft.EntityFrameworkCore;
 using APIpayApplication.Repository;
+using APIpayApplication.Models;
 
 namespace APIpayApplication
 {
@@ -59,7 +60,9 @@ namespace APIpayApplication
 
             //DataBase
             services.AddDbContext<PayContext>(o => o.UseMySQL(Configuration.GetConnectionString("payDataBase")));
-            services.AddTransient<ICrudRepository<IncomeRepository>, IncomeRepository>();
+            services.AddTransient<ICrudRepository<Income>, IncomeRepository>();
+            services.AddTransient<ICrudRepository<Expense>, ExpenseRepository>();
+            services.AddTransient<ICrudRepository<Card>, CardRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

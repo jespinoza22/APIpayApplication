@@ -8,33 +8,32 @@ using Microsoft.EntityFrameworkCore;
 
 namespace APIpayApplication.Repository
 {
-    public class IncomeRepository : ICrudRepository<Income>
+    public class ExpenseRepository :ICrudRepository<Expense>
     {
         private readonly PayContext _dbContext;
-
-        public IncomeRepository(PayContext dbContext)
+        public ExpenseRepository(PayContext dbContext)
         {
             _dbContext = dbContext;
         }
 
         public void Delete(string id)
         {
-            var income = _dbContext.Incomes.Find(id);
-            _dbContext.Incomes.Remove(income);
+            var expense = _dbContext.Expenses.Find(id);
+            _dbContext.Expenses.Remove(expense);
             Save();
         }
 
-        public IEnumerable<Income> getAll()
+        public IEnumerable<Expense> getAll()
         {
-            return _dbContext.Incomes.ToList();
+            return _dbContext.Expenses.ToList();
         }
 
-        public Income GetByID(string id)
+        public Expense GetByID(string id)
         {
-            return _dbContext.Incomes.Find(id);
+            return _dbContext.Expenses.Find(id);
         }
 
-        public void Insert(Income value)
+        public void Insert(Expense value)
         {
             _dbContext.Add(value);
             Save();
@@ -45,7 +44,7 @@ namespace APIpayApplication.Repository
             _dbContext.SaveChanges();
         }
 
-        public void Update(Income value)
+        public void Update(Expense value)
         {
             _dbContext.Entry(value).State = EntityState.Modified;
             Save();

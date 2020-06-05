@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using APIpayApplication.DbContext;
 using Microsoft.EntityFrameworkCore;
 using APIpayApplication.Repository;
+using APIpayApplication.Models;
 
 namespace APIpayApplication.Controllers
 {
@@ -15,30 +16,34 @@ namespace APIpayApplication.Controllers
     [ApiController]
     public class ApiController : ControllerBase
     {
-        private readonly ICrudRepository<IncomeRepository> _incomeRepository;
+        private readonly ICrudRepository<Income>  _incomeRepository;
 
-        public ApiController(ICrudRepository<IncomeRepository> incomeRepository)
+        public ApiController(ICrudRepository<Income> productRepository)
         {
-            _incomeRepository = incomeRepository;
+            _incomeRepository = productRepository;
         }
 
         [HttpGet("public")]
         public IActionResult Public()
         {
-            return Ok(new
-            {
-                Message = "Hello from a public endpoint! You don't need to be authenticated to see this."
-            });
+            var incomes = _incomeRepository.getAll();
+            return new OkObjectResult(incomes);
+            //return Ok(new
+            //{
+            //    Message = "Hello from a public endpoint! You don't need to be authenticated to see this."
+            //});
         }
 
         [HttpGet("private")]
         [Authorize]
         public IActionResult Private()
         {
-            return Ok(new
-            {
-                Message = "Hello the application works perfect"
-            });
+            var incomes = _incomeRepository.getAll();
+            return new OkObjectResult(incomes);
+            //return Ok(new
+            //{
+            //    Message = "Hello the application works perfect"
+            //});
         }
     }
 }
