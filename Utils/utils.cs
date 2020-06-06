@@ -7,10 +7,10 @@ namespace APIpayApplication.Utils
 {
     public class utils
     {
-        public static string IdGenerated() {
+        public static string IdGenerated(string value) {
             string returnValue = string.Empty;
             string dateString = DateTime.Now.ToString("yyyymmddhhmmss");
-            returnValue = string.Format("{0}{1}", dateString, GetRandomString(15));
+            returnValue = string.Format("{0}{1}{2}", value, dateString, GetRandomString(Constantes.lenghtValueDefautl));
             return returnValue;
         }
 

@@ -27,7 +27,7 @@ namespace APIpayApplication.Controllers
         [HttpGet("public")]
         public IActionResult Public()
         {
-            string aleatory = utils.IdGenerated();
+            //string aleatory = utils.IdGenerated();
 
             var incomes = _incomeRepository.getAll();
             return new OkObjectResult(incomes);
