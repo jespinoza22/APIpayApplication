@@ -40,7 +40,6 @@ namespace TestAPIPayApplication.Repository
 
         public void Insert(Card value)
         {
-            value.IdCard = "3";
             _card.Add(value);
         }
 

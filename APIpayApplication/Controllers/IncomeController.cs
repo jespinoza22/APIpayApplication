@@ -40,9 +40,10 @@ namespace APIpayApplication.Controllers
         [Authorize]
         public IActionResult Get(string id, string idUser)
         {
-            var income = from a in _incomeRepository.getAll()
-                       where a.IdUser == idUser && a.IdCard == id
-                       select a;
+            var income = (from a in _incomeRepository.getAll()
+                          where a.IdUser == idUser && a.IdIncome == id
+                          select a).FirstOrDefault();
+            if (income == null) return NotFound();
             return new OkObjectResult(income);
         }
 
@@ -83,6 +84,10 @@ namespace APIpayApplication.Controllers
         [Authorize]
         public IActionResult Delete(string id, string idUser)
         {
+            var income = (from a in _incomeRepository.getAll()
+                          where a.IdUser == idUser && a.IdIncome == id
+                          select a).FirstOrDefault();
+            if (income == null) return NotFound();
             _incomeRepository.Delete(id);
             return new OkResult();
         }
