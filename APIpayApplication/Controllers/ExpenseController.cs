@@ -24,7 +24,7 @@ namespace APIpayApplication.Controllers
         }
 
         // GET: api/<CardController>
-        [HttpGet("{idUser}", Name = "Get")]
+        [HttpGet("{idUser}")]
         [Authorize]
         public IActionResult Get(string idUser)
         {
@@ -36,7 +36,7 @@ namespace APIpayApplication.Controllers
         }
 
         // GET api/<CardController>/5
-        [HttpGet("{id}/{idUser}", Name = "Get")]
+        [HttpGet("{id}/{idUser}")]
         [Authorize]
         public IActionResult Get(string id, string idUser)
         {

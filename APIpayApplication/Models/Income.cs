@@ -16,5 +16,6 @@ namespace APIpayApplication.Models
         public DateTime DateApply { get; set; }
         public decimal Amount { get; set; }
         public string IdCard { get; set; }
+        public string IdMoneda { get; set; }
     }
 }

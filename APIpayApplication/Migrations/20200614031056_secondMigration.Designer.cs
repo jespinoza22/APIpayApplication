@@ -3,14 +3,16 @@ using System;
 using APIpayApplication.DbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace APIpayApplication.Migrations
 {
     [DbContext(typeof(PayContext))]
-    partial class PayContextModelSnapshot : ModelSnapshot
+    [Migration("20200614031056_secondMigration")]
+    partial class secondMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,9 +34,6 @@ namespace APIpayApplication.Migrations
                         .HasColumnType("datetime");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text");
-
-                    b.Property<string>("IdMoneda")
                         .HasColumnType("text");
 
                     b.Property<string>("IdUser")
@@ -63,9 +62,6 @@ namespace APIpayApplication.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("IdCard")
-                        .HasColumnType("text");
-
-                    b.Property<string>("IdMoneda")
                         .HasColumnType("text");
 
                     b.Property<string>("IdUser")

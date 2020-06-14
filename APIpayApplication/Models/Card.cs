@@ -15,5 +15,6 @@ namespace APIpayApplication.Models
         public int CardNumber { get; set; }
         public DateTime DateCreate { get; set; }
         public DateTime DateModify { get; set; }
+        public string IdMoneda { get; set; }
     }
 }
