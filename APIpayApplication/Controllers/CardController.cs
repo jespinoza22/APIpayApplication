@@ -15,6 +15,7 @@ namespace APIpayApplication.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CardController : ControllerBase
     {
         private readonly ICrudRepository<Card> _cardRepository;
@@ -25,37 +26,39 @@ namespace APIpayApplication.Controllers
         }
 
         // GET: api/<CardController>
-        [HttpGet("{idUser}")]
-        [Authorize]
-        public IActionResult Get(string idUser)
-        {
-            var cards = from a in _cardRepository.getAll()
-                        where a.IdUser == idUser
-                        select a;
+        //[HttpGet("{idUser}")]
+        //public IActionResult Get(string idUser)
+        //{
+        //    var cards = from a in _cardRepository.getAll()
+        //                where a.IdUser == idUser
+        //                select a;
 
-            return new OkObjectResult(cards);
-        }
+        //    return new OkObjectResult(cards);
+        //}
 
         // GET api/<CardController>/5
-        [HttpGet("{id}/{idUser}")]
-        [Authorize]
-        public IActionResult Get(string id, string idUser)
+        [HttpGet]
+        public IActionResult Get([FromQuery] string id, string idUser, string description)
         {
+            description = (description != string.Empty && description != null) ? description.ToUpper() : string.Empty;
             var card = (from a in _cardRepository.getAll()
-                        where a.IdUser == idUser && a.IdCard == id
-                        select a).FirstOrDefault();
-            if (card == null) return NotFound();
+                        where a.IdUser == idUser && 
+                        (a.IdCard == id || id == string.Empty || id is null) &&
+                        (a.Description.ToUpper().Contains(description) || description == string.Empty)
+                        select a).ToList();
+            //if (card == null) return NotFound();
             return new OkObjectResult(card);
         }
 
         // POST api/<CardController>
         [HttpPost]
-        [Authorize]
         public IActionResult Post([FromBody] Card card)
         {
             using (var scope = new TransactionScope())
             {
                 card.IdCard = utils.IdGenerated(Constantes.CardValue);
+                card.DateCreate = DateTime.Now;
+                card.DateModify = DateTime.Now;
                 _cardRepository.Insert(card);
                 scope.Complete();
                 return CreatedAtAction(nameof(Get), new { id = card.IdCard }, card);
@@ -64,7 +67,6 @@ namespace APIpayApplication.Controllers
 
         // PUT api/<CardController>/5
         [HttpPut]
-        [Authorize]
         public IActionResult Put([FromBody] Card card)
         {
             if (card != null)
@@ -82,15 +84,14 @@ namespace APIpayApplication.Controllers
 
         // DELETE api/<CardController>/5
         [HttpDelete("{id}/{idUser}")]
-        [Authorize]
         public IActionResult Delete(string id, string idUser)
         {
             var card = (from a in _cardRepository.getAll()
                         where a.IdUser == idUser && a.IdCard == id
                         select a).FirstOrDefault();
-            if (card == null) return NotFound();
+            if (card == null) return Ok(new { resultado = "1" });
             _cardRepository.Delete(id);
-            return new OkResult();
+            return Ok(new { resultado = "0" });
         }
     }
 }

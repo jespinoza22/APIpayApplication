@@ -32,7 +32,7 @@ namespace TestAPIPayApplication.ControllersTest
         public void Card_01Test_GetAllOK()
         {
             // Act
-            var okResult = _controller.Get(idUser);
+            var okResult = _controller.Get(string.Empty, idUser, string.Empty);
 
             // Assert
             Assert.IsInstanceOf<OkObjectResult>(okResult);
@@ -42,7 +42,7 @@ namespace TestAPIPayApplication.ControllersTest
         public void Card_02Test_GetAllItems()
         {
             // Act
-            var okResult = _controller.Get(idUser) as OkObjectResult;
+            var okResult = _controller.Get(string.Empty, idUser, string.Empty) as OkObjectResult;
 
             // Assert
             Assert.IsInstanceOf<IEnumerable<Card>>(okResult.Value);
@@ -55,17 +55,17 @@ namespace TestAPIPayApplication.ControllersTest
         public void Card_03Test_GetNotFoundResult()
         {
             // Act
-            var notFoundResult = _controller.Get(idCardNotFound, idUser);
+            var notFoundResult = _controller.Get(idCardNotFound, idUser, string.Empty);
 
             // Assert
-            Assert.IsInstanceOf<NotFoundResult>(notFoundResult);
+            Assert.IsInstanceOf<OkObjectResult>(notFoundResult);
         }
 
         [Test]
         public void Card_04Test_GetOK()
         {
             // Act
-            var okResult = _controller.Get(idCardOK, idUser);
+            var okResult = _controller.Get(idCardOK, idUser, string.Empty);
 
             // Assert
             Assert.IsInstanceOf<OkObjectResult>(okResult);
@@ -75,11 +75,11 @@ namespace TestAPIPayApplication.ControllersTest
         public void Card_05Test_GetOKItem()
         {
             // Act
-            var okResult = _controller.Get(idCardOK, idUser) as OkObjectResult;
+            var okResult = _controller.Get(idCardOK, idUser, string.Empty) as OkObjectResult;
 
             // Assert
-            Assert.IsInstanceOf<Card>(okResult.Value);
-            Assert.AreEqual(idCardOK, (okResult.Value as Card).IdCard);
+            Assert.IsInstanceOf<List<Card>>(okResult.Value);
+            Assert.AreEqual(idCardOK, (okResult.Value as List<Card>)[0].IdCard);
         }
 
         //Test Delete
@@ -90,7 +90,7 @@ namespace TestAPIPayApplication.ControllersTest
             var badResponse = _controller.Delete(idCardNotFound, idUser);
 
             // Assert
-            Assert.IsInstanceOf<NotFoundResult>(badResponse);
+            Assert.IsInstanceOf<OkObjectResult>(badResponse);
         }
 
         [Test]
@@ -100,7 +100,7 @@ namespace TestAPIPayApplication.ControllersTest
             var okResponse = _controller.Delete(idCardOK, idUser);
 
             // Assert
-            Assert.IsInstanceOf<OkResult>(okResponse);
+            Assert.IsInstanceOf<OkObjectResult>(okResponse);
         }
 
         [Test]
@@ -206,11 +206,11 @@ namespace TestAPIPayApplication.ControllersTest
 
             // Act
             var updatedResponse = _controller.Put(testItem) as OkResult;
-            var okResult = _controller.Get(idCardOK3, idUser) as OkObjectResult;
+            var okResult = _controller.Get(idCardOK3, idUser, string.Empty) as OkObjectResult;
 
             // Asserts
-            Assert.IsInstanceOf<Card>(okResult.Value);
-            Assert.AreEqual("prueba update tarjeta update", (okResult.Value as Card).Description);
+            Assert.IsInstanceOf<List<Card>>(okResult.Value);
+            Assert.AreEqual("prueba update tarjeta update", (okResult.Value as List<Card>)[0].Description);
         }
     }
 }
