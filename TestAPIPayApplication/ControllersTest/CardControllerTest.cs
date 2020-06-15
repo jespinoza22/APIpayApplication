@@ -122,7 +122,7 @@ namespace TestAPIPayApplication.ControllersTest
             {
                 IdCard = "10",
                 IdUser = idUser,
-                CardNumber = 0,
+                CardNumber = "0",
                 DateCreate = DateTime.Now,
                 DateModify = DateTime.Now,
                 Description = "nueva tarjeta test"
@@ -144,7 +144,7 @@ namespace TestAPIPayApplication.ControllersTest
             {
                 IdCard = "20",
                 IdUser = idUser,
-                CardNumber = 0,
+                CardNumber = "0",
                 DateCreate = DateTime.Now,
                 DateModify = DateTime.Now,
                 Description = "nueva tarjeta test 1"
@@ -178,7 +178,7 @@ namespace TestAPIPayApplication.ControllersTest
             {
                 IdCard = idCardOK3,
                 IdUser = idUser,
-                CardNumber = 0,
+                CardNumber = "0",
                 DateCreate = DateTime.Now,
                 DateModify = DateTime.Now,
                 Description = "prueba update tarjeta"
@@ -198,7 +198,7 @@ namespace TestAPIPayApplication.ControllersTest
             {
                 IdCard = idCardOK3,
                 IdUser = idUser,
-                CardNumber = 0,
+                CardNumber = "0",
                 DateCreate = DateTime.Now,
                 DateModify = DateTime.Now,
                 Description = "prueba update tarjeta update"

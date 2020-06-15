@@ -15,9 +15,9 @@ namespace TestAPIPayApplication.Repository
 
         public CardServiceFake() {
             _card = new List<Card>() {
-                new Card() { IdCard = "1", IdUser = "1", Description = "Nueva tarjeta 1", CardNumber = 0, DateCreate = DateTime.Now, DateModify = DateTime.Now },
-                new Card() { IdCard = "2", IdUser = "1", Description = "Nueva tarjeta 2", CardNumber = 0, DateCreate = DateTime.Now, DateModify = DateTime.Now },
-                new Card() { IdCard = "3", IdUser = "1", Description = "Nueva tarjeta 3", CardNumber = 0, DateCreate = DateTime.Now, DateModify = DateTime.Now }
+                new Card() { IdCard = "1", IdUser = "1", Description = "Nueva tarjeta 1", CardNumber = "0", DateCreate = DateTime.Now, DateModify = DateTime.Now },
+                new Card() { IdCard = "2", IdUser = "1", Description = "Nueva tarjeta 2", CardNumber = "0", DateCreate = DateTime.Now, DateModify = DateTime.Now },
+                new Card() { IdCard = "3", IdUser = "1", Description = "Nueva tarjeta 3", CardNumber = "0", DateCreate = DateTime.Now, DateModify = DateTime.Now }
             };
         }
 

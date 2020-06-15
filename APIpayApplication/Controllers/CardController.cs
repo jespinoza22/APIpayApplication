@@ -84,10 +84,10 @@ namespace APIpayApplication.Controllers
 
         // DELETE api/<CardController>/5
         [HttpDelete]
-        public IActionResult Delete(string id, string idUser)
+        public IActionResult Delete(string id)
         {
             var card = (from a in _cardRepository.getAll()
-                        where a.IdUser == idUser && a.IdCard == id
+                        where a.IdCard == id
                         select a).FirstOrDefault();
             if (card == null) return Ok(new { resultado = "1" });
             _cardRepository.Delete(id);
