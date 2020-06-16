@@ -33,7 +33,7 @@ namespace TestAPIPayApplication.ControllersTest
         public void Expense_01Test_GetAllOK()
         {
             // Act
-            var okResult = _controller.Get(idUser);
+            var okResult = _controller.Get(string.Empty, idUser, 0, 0, 0, string.Empty);
 
             // Assert
             Assert.IsInstanceOf<OkObjectResult>(okResult);
@@ -43,7 +43,7 @@ namespace TestAPIPayApplication.ControllersTest
         public void Expense_02Test_GetAllItems()
         {
             // Act
-            var okResult = _controller.Get(idUser) as OkObjectResult;
+            var okResult = _controller.Get(string.Empty, idUser, 0, 0, 0, string.Empty) as OkObjectResult;
 
             // Assert
             Assert.IsInstanceOf<IEnumerable<Expense>>(okResult.Value);
@@ -56,17 +56,17 @@ namespace TestAPIPayApplication.ControllersTest
         public void Expense_03Test_GetNotFoundResult()
         {
             // Act
-            var notFoundResult = _controller.Get(idExpenseNotFound, idUser);
+            var notFoundResult = _controller.Get(idExpenseNotFound, idUser, 0, 0, 0, string.Empty);
 
             // Assert
-            Assert.IsInstanceOf<NotFoundResult>(notFoundResult);
+            Assert.IsInstanceOf<OkObjectResult>(notFoundResult);
         }
 
         [Test]
         public void Expense_04Test_GetOK()
         {
             // Act
-            var okResult = _controller.Get(idExpenseOK, idUser);
+            var okResult = _controller.Get(idExpenseOK, idUser, 0, 0, 0, string.Empty);
 
             // Assert
             Assert.IsInstanceOf<OkObjectResult>(okResult);
@@ -76,11 +76,11 @@ namespace TestAPIPayApplication.ControllersTest
         public void Expense_05Test_GetOKItem()
         {
             // Act
-            var okResult = _controller.Get(idExpenseOK, idUser) as OkObjectResult;
+            var okResult = _controller.Get(idExpenseOK, idUser, 0, 0, 0, string.Empty) as OkObjectResult;
 
             // Assert
-            Assert.IsInstanceOf<Expense>(okResult.Value);
-            Assert.AreEqual(idExpenseOK, (okResult.Value as Expense).IdCard);
+            Assert.IsInstanceOf<List<Expense>>(okResult.Value);
+            Assert.AreEqual(idExpenseOK, (okResult.Value as List<Expense>)[0].IdCard);
         }
 
         //Test Delete
@@ -88,27 +88,27 @@ namespace TestAPIPayApplication.ControllersTest
         public void Expense_06Test_RemoveNotFound()
         {
             // Act
-            var badResponse = _controller.Delete(idExpenseNotFound, idUser);
+            var badResponse = _controller.Delete(idExpenseNotFound);
 
             // Assert
-            Assert.IsInstanceOf<NotFoundResult>(badResponse);
+            Assert.IsInstanceOf<OkObjectResult>(badResponse);
         }
 
         [Test]
         public void Expense_07Test_RemoveOK()
         {
             // Act
-            var okResponse = _controller.Delete(idExpenseOK, idUser);
+            var okResponse = _controller.Delete(idExpenseOK);
 
             // Assert
-            Assert.IsInstanceOf<OkResult>(okResponse);
+            Assert.IsInstanceOf<OkObjectResult>(okResponse);
         }
 
         [Test]
         public void Expense_08Test_RemoveOKItem()
         {
             // Act
-            var okResponse = _controller.Delete(idExpenseOK2, idUser);
+            var okResponse = _controller.Delete(idExpenseOK2);
 
             // Assert
             Assert.AreEqual(1, _service.getAll().Count());
@@ -211,12 +211,12 @@ namespace TestAPIPayApplication.ControllersTest
 
             // Act
             var updatedResponse = _controller.Put(testItem) as OkResult;
-            var okResult = _controller.Get(idExpenseOK3, idUser) as OkObjectResult;
+            var okResult = _controller.Get(idExpenseOK3, idUser, 0, 0, 0, string.Empty) as OkObjectResult;
 
             // Asserts
             Assert.IsInstanceOf<OkResult>(updatedResponse);
-            Assert.IsInstanceOf<Expense>(okResult.Value);
-            Assert.AreEqual("prueba update expense update", (okResult.Value as Expense).Description);
+            Assert.IsInstanceOf<List<Expense>>(okResult.Value);
+            Assert.AreEqual("prueba update expense update", (okResult.Value as List<Expense>)[0].Description);
         }
     }
 }

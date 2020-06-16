@@ -14,6 +14,7 @@ namespace APIpayApplication.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ExpenseController : ControllerBase
     {
         private readonly ICrudRepository<Expense> _expenseRepository;
@@ -24,37 +25,40 @@ namespace APIpayApplication.Controllers
         }
 
         // GET: api/<CardController>
-        [HttpGet("{idUser}")]
-        [Authorize]
-        public IActionResult Get(string idUser)
-        {
-            var expenses = from a in _expenseRepository.getAll()
-                          where a.IdUser == idUser
-                          select a;
+        //[HttpGet]
+        //public IActionResult Get(string idUser)
+        //{
+        //    var expenses = from a in _expenseRepository.getAll()
+        //                   where a.IdUser == idUser
+        //                   select a;
 
-            return new OkObjectResult(expenses);
-        }
+        //    return new OkObjectResult(expenses);
+        //}
 
         // GET api/<CardController>/5
-        [HttpGet("{id}/{idUser}")]
-        [Authorize]
-        public IActionResult Get(string id, string idUser)
+        [HttpGet]
+        public IActionResult Get([FromQuery] string id, string idUser, int month, int year, decimal amount, string description)
         {
+            description = (description != string.Empty && description != null) ? description.ToUpper() : string.Empty;
             var expense = (from a in _expenseRepository.getAll()
-                           where a.IdUser == idUser && a.IdExpense == id
-                           select a).FirstOrDefault();
-            if (expense == null) return NotFound();
+                          where a.IdUser == idUser &&
+                          (a.IdExpense == id || id == string.Empty || id is null) &&
+                          (a.Description.ToUpper().Contains(description) || description == string.Empty) &&
+                          (a.DateApply.Year == year || year == 0) &&
+                          (a.DateApply.Month == month || month == 0) &&
+                          (a.Amount <= amount || amount == 0)
+                          select a).ToList();
             return new OkObjectResult(expense);
         }
 
         // POST api/<CardController>
         [HttpPost]
-        [Authorize]
         public IActionResult Post([FromBody] Expense expense)
         {
             using (var scope = new TransactionScope())
             {
                 expense.IdExpense = utils.IdGenerated(Constantes.ExpenseValue);
+                expense.DateCreation = DateTime.Now;
                 _expenseRepository.Insert(expense);
                 scope.Complete();
                 return CreatedAtAction(nameof(Get), new { id = expense.IdCard }, expense);
@@ -63,7 +67,6 @@ namespace APIpayApplication.Controllers
 
         // PUT api/<CardController>/5
         [HttpPut]
-        [Authorize]
         public IActionResult Put([FromBody] Expense expense)
         {
             if (expense != null)
@@ -80,16 +83,15 @@ namespace APIpayApplication.Controllers
         }
 
         // DELETE api/<CardController>/5
-        [HttpDelete("{id}/{idUser}")]
-        [Authorize]
-        public IActionResult Delete(string id, string idUser)
+        [HttpDelete]
+        public IActionResult Delete([FromQuery] string id)
         {
             var expense = (from a in _expenseRepository.getAll()
-                           where a.IdUser == idUser && a.IdExpense == id
-                           select a).FirstOrDefault();
-            if (expense == null) return NotFound();
+                          where a.IdExpense == id
+                          select a).FirstOrDefault();
+            if (expense == null) return Ok(new { resultado = "1" });
             _expenseRepository.Delete(id);
-            return new OkResult();
+            return Ok(new { resultado = "0" });
         }
     }
 }

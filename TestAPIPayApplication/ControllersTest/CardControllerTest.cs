@@ -87,7 +87,7 @@ namespace TestAPIPayApplication.ControllersTest
         public void Card_06Test_RemoveNotFound()
         {
             // Act
-            var badResponse = _controller.Delete(idCardNotFound, idUser);
+            var badResponse = _controller.Delete(idCardNotFound);
 
             // Assert
             Assert.IsInstanceOf<OkObjectResult>(badResponse);
@@ -97,7 +97,7 @@ namespace TestAPIPayApplication.ControllersTest
         public void Card_07Test_RemoveOK()
         {
             // Act
-            var okResponse = _controller.Delete(idCardOK, idUser);
+            var okResponse = _controller.Delete(idCardOK);
 
             // Assert
             Assert.IsInstanceOf<OkObjectResult>(okResponse);
@@ -107,7 +107,7 @@ namespace TestAPIPayApplication.ControllersTest
         public void Card_08Test_RemoveOKItem()
         {
             // Act
-            var okResponse = _controller.Delete(idCardOK2, idUser);
+            var okResponse = _controller.Delete(idCardOK2);
 
             // Assert
             Assert.AreEqual(1, _service.getAll().Count());
