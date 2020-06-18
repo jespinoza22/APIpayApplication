@@ -9,8 +9,17 @@ namespace APIpayApplication.Models
     {
         public int month { get; set; }
         public int year { get; set; }
-        public decimal income { get; set; }
-        public decimal expense { get; set; }
-        public decimal total { get; set; }
+        public decimal incomeSoles { get; set; }
+        public decimal incomeDolares { get; set; }
+        public decimal expenseSoles { get; set; }
+        public decimal expenseDolares { get; set; }
+        public decimal totalSoles { get; set; }
+        public decimal totalDolares { get; set; }
+    }
+
+    public class ResumeTotal 
+    {
+        public decimal totalSoles { get; set; }
+        public decimal totalDolares { get; set; }
     }
 }
