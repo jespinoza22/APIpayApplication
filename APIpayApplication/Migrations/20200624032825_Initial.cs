@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace APIpayApplication.Migrations
 {
-    public partial class DbInit : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,9 +14,10 @@ namespace APIpayApplication.Migrations
                     IdCard = table.Column<string>(nullable: false),
                     IdUser = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    CardNumber = table.Column<int>(nullable: false),
+                    CardNumber = table.Column<string>(nullable: true),
                     DateCreate = table.Column<DateTime>(nullable: false),
-                    DateModify = table.Column<DateTime>(nullable: false)
+                    DateModify = table.Column<DateTime>(nullable: false),
+                    IdMoneda = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -33,7 +34,8 @@ namespace APIpayApplication.Migrations
                     DateCreation = table.Column<DateTime>(nullable: false),
                     DateApply = table.Column<DateTime>(nullable: false),
                     Amount = table.Column<decimal>(nullable: false),
-                    IdCard = table.Column<string>(nullable: true)
+                    IdCard = table.Column<string>(nullable: true),
+                    IdMoneda = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -50,7 +52,8 @@ namespace APIpayApplication.Migrations
                     DateCreation = table.Column<DateTime>(nullable: false),
                     DateApply = table.Column<DateTime>(nullable: false),
                     Amount = table.Column<decimal>(nullable: false),
-                    IdCard = table.Column<string>(nullable: true)
+                    IdCard = table.Column<string>(nullable: true),
+                    IdMoneda = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

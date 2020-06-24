@@ -32,10 +32,9 @@ namespace APIpayApplication
                     builder =>
                     {
                         builder
-                        .WithOrigins("http://localhost:4200")
+                        .AllowAnyOrigin()
                         .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .AllowCredentials();
+                        .AllowAnyHeader();
                     });
             });
 
@@ -59,7 +58,8 @@ namespace APIpayApplication
             services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
 
             //DataBase
-            services.AddDbContext<PayContext>(o => o.UseMySQL(Configuration.GetConnectionString("payDataBase")));
+            //services.AddDbContext<PayContext>(o => o.UseMySQL(Configuration.GetConnectionString("payDataBase")));
+            services.AddDbContext<PayContext>(o => o.UseSqlServer(Configuration.GetConnectionString("payDataBase")));
             services.AddTransient<ICrudRepository<Income>, IncomeRepository>();
             services.AddTransient<ICrudRepository<Expense>, ExpenseRepository>();
             services.AddTransient<ICrudRepository<Card>, CardRepository>();
